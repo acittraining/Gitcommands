@@ -325,7 +325,7 @@ git show 3d1a95df5c8eecab8dd2781749dea0491b2842cc
 git show HEAD 
 git show HEAD~2
 
-==> Seeing how many pls 
+==> identifying who made some commits in a file 
 ls 
 
 git annotate jenkins_docker_file
