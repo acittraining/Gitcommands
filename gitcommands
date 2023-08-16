@@ -328,6 +328,8 @@ git show HEAD~2
 ==> identifying who made some commits in a file 
 ls 
 
+==>Use git annotate command to see who made changes or commits to a file
+
 git annotate jenkins_docker_file
 
 
