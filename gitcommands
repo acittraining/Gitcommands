@@ -1,0 +1,361 @@
+
+========================================= Working with Git ======================================================
+
+==> Set two users for git.
+==> One local user[windows] and remote user [developer2] on an EC2 instance in AWS 
+
+========================================= Install and setup Git in Windows and Linux =============================
+
+sudo -i 
+yum install -y git 
+git --version 
+
+================================= On Amazon Linux2 Instance on AWS ===============================================
+
+git config --global user.email "developer2@gmail.com"
+git config --global user.name "developer2"
+
+==> Get the configured credentials 
+
+git config --global user.name
+git config --global user.email 
+
+
+=========================== Before working with Git =============================================================
+
+--> All git commands starts with "git"
+--> You should introduce yourself to git
+--> Git works with repositories
+--> Most of the git commands should run inside a git repository 
+
+============================ A New Directory in your C: Drive ===============================================
+
+In C: Drive create a folder known as Projects and create a demorepo folder inside the Project folder.
+Projects
+demorepo
+cd ..
+cd ..
+C:\cd Projects
+C:\Projects>cd demorepo 
+
+==> Initialize the git demorepo directory as a repository
+
+git init . 
+
+==> Create your files 
+cat >file1
+
+==>Create another file [file2.txt] directly in the demorepo folder[directory] and add some content to it.
+
+================================================= Git Stages =================================================
+
+Git stages will follow the steps below
+      ==> Create files in the working directory 
+	  ==> Add the files to the staging area [use git add <file>]
+	  ==> Commit the files from the staging area to the repository [ git commit ] 
+	  
+==> Adding files from working directory to the staging area using git bash 
+
+git add <file> to add to the staging area 
+git add file1 file2.txt 
+git add . 
+git add --all [This will add all files to the repository] 
+
+==> Adding files from staging area to a repository 
+
+git commit  
+git commit -m "This is my first commit" 
+==> git log will show all the commits that you have done. 
+
+git log 
+
+============================ Git Stages commands =================================================
+
+git add - add files into staging area 
+git commit -add changes to local Version Control System <VCS> 
+git status - shows current stage of repository 
+git log - shows commit history 
+
+
+=========================== Create a new, update some files and commit the changes to local repo ==============
+
+touch file6 file7 file8 
+vim file6
+vim file2 
+
+git status 
+git add . 
+git status 
+git commit -m "adding some new files as well" 
+git status 
+git log 
+
+====================================== Compare Changes =======================================
+
+==> How to campare changes from working directory to staging area and local repo. 
+
+==> Comparison between working directory and staging area. 
+
+pwd
+ls 
+
+==> update some file and add them to the stagin area 
+vim file1 
+git status 
+
+==>Rename all the .txt files to exclude the .txt extension 
+mv file2.txt file2 
+mv file4.txt file4 
+
+==> move the files to the staging area 
+
+git add --all 
+
+==> modify some files again and compare the files in the working directory and staging area. 
+
+vim file1 
+vim file2 
+
+==> Use git diff command to compare the changes in files in the working directory and stagin area
+
+git diff 
+
+==> To compare files in the working directory and staging area, use the command below
+
+git diff --staged
+
+==> Find out the differentiation between the staged and the HEAD(Repository) 
+
+git diff --staged HEAD 
+
+==> Compare working directory with local repository (VCS) 
+
+git diff HEAD 
+
+
+========================================= Git diff commands ===========================================
+
+git diff - Compare changes of working directory with Staging area
+git diff --staged - Compare changes of Staging area area with Local Repository
+git diff HEAD - Compare changes of working directory with Local Repository
+
+
+==================================== Compare lastest commit with previous commit ======================
+
+git diff [commit id ]
+git diff 41c849b
+
+===================================== working with Team ============================================
+
+==> Sharing your code with other Team member 
+==> In order to share your code with othe developers, push the code to github.
+==> Create an account with github
+https://www.github.com 
+
+===================================== Create a Repo on GitHub ========================================
+
+==> login to github and create a repository 
+
+===================================== Cloning a Repository from github ==============================
+
+git clone [repo name ] 
+
+cd ..
+C:\projects>
+C:\projects>git clone https://github.com/acittraining/acitgitrepo.git
+ls -l 
+cd acitgitrepo 
+ls -l
+cat READ.md
+
+===================================== Create some html files in your repo ==============
+
+vim index.html
+<h1> Welcome to AC-IT Training Solutions </h1>
+
+vim contact.html 
+<h1> our contact details are </h1>
+<h2> Phone no: 254-897-8754 </h1>
+
+==> Add the files to the staging area 
+
+git status 
+git add . 
+
+==> Push the files from the staging area to the local repository 
+
+git commit -m "added index and contact files" 
+git status 
+git log 
+
+==> Make the commit to the remote repository 
+
+git push origin main 
+
+========================================== Updating the code ================================
+
+==> An email address was omitted in the code
+==> developer wants to update the code by adding an email 
+==> Connect to developer2 EC2 instance 
+==> Rename the hostname of the EC2 Instance 
+
+==> Edit the /etc/hostname  files
+
+sudo su - 
+vim /etc/hostname 
+developer2-system
+:wq!
+
+hostname developer2-system 
+sudo su - 
+
+==>Clone the repo from github to the developer2 user
+
+git clone https://github.com/acittraining/acitgitrepo.git
+
+vim contact.html 
+add an email address 
+
+git status 
+git add . 
+git commit -m "Added an email address to contact" 
+git push origin main 
+
+
+==> User access-tokens to push to remote repo in github 
+==> Access-Tokens works as a password
+
+Access-Tokens [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] 
+
+
+=================================== Working with Git Commit ===========================================
+
+==> Use git pull to get changes that were committed by other developers
+
+git pull 
+
+================================= Connecting to Github with SSH ======================================
+
+==> SSH based authentication is more secured than password based authentication 
+==> setup SSH based authentication for developer1 and developer2 
+==> This enables us to connect to the Github account without a password 
+==> Generate the ssh keys on the linux system and add them to the Github account 
+
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+ssh-keygen
+cd /root/.ssh
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+
+==>Try clone a repository using ssh 
+
+git clone git@github.com:acittraining/testhello.git
+
+==> Permissions will be denied 
+
+==> Copy your public key into your github account. 
+
+cat /root/.ssh/id_rsa.pub 
+
+git clone git@github.com:acittraining/testhello.git
+
+
+==================================================== Pushing a Repo from local system to Github =======================
+
+==> Sharing codes with other developers from the local repository
+==> Push the code to github from your local repository
+==> create the repository in the remote repository.
+==> Create the repository [demorepo ] in the github account and link up the two 
+
+ls -a 
+cd .git
+ls 
+cat config 
+
+====================================== create a new repository on the command line ================================
+==>Make sure there are no files which are uncommitted
+
+git status 
+
+
+git remote add origin git@github.com:acittraining/demorepo.git
+
+cat .git/config 
+
+==> push changes to remote repository 
+
+git branch --set-upstream-to=origin/main main
+
+git push -u origin main
+
+
+======================================= …or push an existing repository from the command line ======================
+
+git remote add origin git@github.com:acittraining/demorepo.git
+git branch -M main
+git push -u origin main
+
+========================================== Working with Commits ===================================================
+
+==> Commits on local repo
+==> Commits on remote repo [Github] 
+
+===================================== Comparing changes made to a repo ============================================
+
+==> lastes commit
+
+git log 
+
+==> Comparing previous commits with the latest commits 
+==> git diff helps us to understand the differences between 2 commits 
+
+git diff HEAD HEAD~1
+git diff HEAD~2 HEAD~4 
+
+===============================Identifying Changes pushed to a specific commit ======================================
+
+==> Identifying the git acittraining 
+git log 
+
+==> Identifying changes pushed through a commit 
+
+git show [latest commit id] [shakle] 
+git show 3d1a95df5c8eecab8dd2781749dea0491b2842cc
+git show HEAD 
+git show HEAD~2
+
+==> Seeing how many pls 
+ls 
+
+git annotate jenkins_docker_file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
